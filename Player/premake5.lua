@@ -39,6 +39,8 @@ project "Player"
 	links(Dependencies.Faux.LibName)
 	postbuildcommands(Dependencies.Faux.PostBuildCommands)
 	defines(Dependencies.Faux.Defines)
+	buildoptions(Dependencies.Faux.BuildOptions)
+	linkoptions(Dependencies.Faux.LinkOptions)
 
 	filter "system:windows"
 		systemversion "latest"

@@ -70,6 +70,8 @@ local Dependencies =
     },
 	Obsidian = local_require("Vendor/Obsidian/Obsidian/Dependencies.lua").Obsidian,
 
+    FFmpeg = {},
+
     -- Internal dependencies
     Faux = 
     {
@@ -77,7 +79,10 @@ local Dependencies =
         LibDir = {},
         LibName = {},
         PostBuildCommands = {},
-        Defines = {}
+        Defines = {},
+
+        BuildOptions = {},
+        LinkOptions = {},
     }
 }
 ------------------------------------------------------------------------------
@@ -109,6 +114,16 @@ elseif OBSIDIAN_GRAPHICS_API == "dx12" then
     append_to_table(Dependencies.Faux.Defines, "OB_API_DX12")
 else
     error("Invalid API")
+end
+
+-- BuildOptions
+if os.target() == "linux" then
+    append_to_table(Dependencies.Faux.LinkOptions, "`pkg-config --cflags libavcodec libavformat libavutil libswscale libswresample`")
+end
+
+-- LinkOptions
+if os.target() == "linux" then
+    append_to_table(Dependencies.Faux.LinkOptions, "`pkg-config --libs libavcodec libavformat libavutil libswscale libswresample`")
 end
 ------------------------------------------------------------------------------
 

@@ -44,6 +44,9 @@ project "FauxFlix"
 	links(remove_from_table(Dependencies.Faux.LibName, "Faux"))
 	--postbuildcommands(Dependencies.Faux.PostBuildCommands)
 	defines(Dependencies.Faux.Defines)
+	
+	buildoptions(Dependencies.Faux.BuildOptions)
+	linkoptions(Dependencies.Faux.LinkOptions)
 
 	filter "system:windows"
 		systemversion "latest"
