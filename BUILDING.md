@@ -18,7 +18,9 @@
     ./install_premake5.bat
     ```
 
-4. Choose what you want it build to:
+4. TODO: FFMPEG install
+
+5. Choose what you want it build to:
     - Visual Studio 17 2022:
         ```sh
         ./generate_vs2022.bat
@@ -47,7 +49,14 @@
     ./install_premake5.sh
     ```
 
-4. Generate make files:
+4. (Optional) If you haven't already installed the development kit for x11 or wayland install it now.
+
+5. (Optional) If you haven't already installed ffmpeg. Example:
+    ```sh
+    sudo pacman -Syu ffmpeg lame
+    ```
+
+6. Generate make files:
     ```sh
     chmod +x generate_make_%compiler%.sh
     ./generate_make_%compiler%.sh
@@ -72,7 +81,9 @@
     ./install_premake5.sh
     ```
 
-4. Generate make files:
+4. TODO: FFMPEG install
+
+5. Generate project files:
     ```sh
     chmod +x generate_xcode.sh
     ./generate_xcode.sh
