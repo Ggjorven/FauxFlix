@@ -70,7 +70,11 @@ local Dependencies =
     },
 	Obsidian = local_require("Vendor/Obsidian/Obsidian/Dependencies.lua").Obsidian,
 
-    FFmpeg = {},
+    FFmpeg = 
+    {
+        BuildOptions = {},
+        LinkOptions = {},
+    },
 
     -- Internal dependencies
     Faux = 
@@ -85,6 +89,28 @@ local Dependencies =
         LinkOptions = {},
     }
 }
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+-- External Dependency logic
+------------------------------------------------------------------------------
+-- FFmpeg
+-- BuildOptions
+-- TODO: Window and MacOS
+if os.target() == "linux" then
+    append_to_table(Dependencies.FFmpeg.BuildOptions, "`pkg-config --cflags libavcodec libavformat libavutil libswscale libswresample`")
+else
+    error("FFmpeg inclusion is currently not supported for this platform. Window and MacOS are in the making.")
+end
+
+-- LinkOptions
+-- TODO: Window and MacOS
+if os.target() == "linux" then
+    append_to_table(Dependencies.FFmpeg.LinkOptions, "`pkg-config --libs libavcodec libavformat libavutil libswscale libswresample`")
+else
+    error("FFmpeg linking is currently not supported for this platform. Window and MacOS are in the making.")
+end
+
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
@@ -113,18 +139,14 @@ if OBSIDIAN_GRAPHICS_API == "vulkan" then
 elseif OBSIDIAN_GRAPHICS_API == "dx12" then
     append_to_table(Dependencies.Faux.Defines, "OB_API_DX12")
 else
-    error("Invalid API")
+    error("Invalid API selected.")
 end
 
 -- BuildOptions
-if os.target() == "linux" then
-    append_to_table(Dependencies.Faux.LinkOptions, "`pkg-config --cflags libavcodec libavformat libavutil libswscale libswresample`")
-end
+append_to_table(Dependencies.Faux.BuildOptions, Dependencies.FFmpeg.BuildOptions)
 
 -- LinkOptions
-if os.target() == "linux" then
-    append_to_table(Dependencies.Faux.LinkOptions, "`pkg-config --libs libavcodec libavformat libavutil libswscale libswresample`")
-end
+append_to_table(Dependencies.Faux.LinkOptions, Dependencies.FFmpeg.LinkOptions)
 ------------------------------------------------------------------------------
 
 return Dependencies
