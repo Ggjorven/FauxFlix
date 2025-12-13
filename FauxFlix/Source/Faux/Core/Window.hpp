@@ -2,7 +2,7 @@
 
 #include "Faux/Core/Core.hpp"
 
-#include "Faux/Renderer/Renderer.hpp"
+#include "Faux/Renderer/RenderContext.hpp"
 
 #include <Obsidian/Core/Window.hpp>
 
@@ -10,11 +10,6 @@
 #include <string>
 #include <memory>
 #include <functional>
-
-namespace Faux::Project
-{
-    class Renderer;
-}
 
 namespace Faux
 {
@@ -65,6 +60,7 @@ namespace Faux
         // Getters
         inline const WindowSpecification& GetSpecification() const { return m_Specification; }
         inline Obsidian::Window& GetWindow() { return m_Window; }
+        inline RenderContext GetContext() { return m_RenderContext; }
 
         inline bool IsOpen() const { return m_Window.IsOpen(); }
 
@@ -81,10 +77,9 @@ namespace Faux
         WindowSpecification m_Specification;
 
         Obsidian::Window m_Window;
-        Renderer m_Renderer;
+        RenderContext m_RenderContext;
 
         friend class Renderer;
-        friend class Project::Renderer;
     };
 
 }

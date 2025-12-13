@@ -12,23 +12,18 @@
 #include <cstdint>
 #include <vector>
 
-namespace Faux::Project
-{
-    class Renderer;
-}
-
 namespace Faux
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
     // Renderer
     ////////////////////////////////////////////////////////////////////////////////////
-    class Renderer
+    class RenderContext
     {
     public:
         // Constructor & Destructor
-        Renderer(Obsidian::Window& window, bool vsync);
-        ~Renderer();
+        RenderContext(Obsidian::Window& window, bool vsync);
+        ~RenderContext();
 
         // Methods
         // Note: These functions are called by the window
@@ -62,8 +57,6 @@ namespace Faux
         std::array<Nano::Memory::DeferredConstruct<Obsidian::CommandListPool>, Obsidian::Information::FramesInFlight> m_GraphicsListPools = { };
 
         std::queue<Obsidian::DeviceDestroyFn> m_DestroyQueue = {};
-
-        friend class Project::Renderer;
     };
 
 }

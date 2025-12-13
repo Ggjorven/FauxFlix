@@ -1,5 +1,5 @@
 #include "ffpch.h"
-#include "Renderer.hpp"
+#include "RenderContext.hpp"
 
 #include "Faux/Core/Core.hpp"
 #include "Faux/Core/Logger.hpp"
@@ -12,7 +12,7 @@ namespace Faux
     ////////////////////////////////////////////////////////////////////////////////////
     // Constructor & Destructor
     ////////////////////////////////////////////////////////////////////////////////////
-    Renderer::Renderer(Obsidian::Window& window, bool vsync)
+    RenderContext::RenderContext(Obsidian::Window& window, bool vsync)
         : m_Window(window)
         , m_Device(Obsidian::DeviceSpecification()
             .SetNativeWindow(m_Window.GetNativeWindow())
@@ -37,7 +37,7 @@ namespace Faux
         }
     }
 
-    Renderer::~Renderer()
+    RenderContext::~RenderContext()
     {
         m_Device.Wait();
 
@@ -52,7 +52,7 @@ namespace Faux
     ////////////////////////////////////////////////////////////////////////////////////
     // Methods
     ////////////////////////////////////////////////////////////////////////////////////
-    void Renderer::Begin()
+    void RenderContext::Begin()
     {
         DestroyQueue();
 
@@ -60,7 +60,7 @@ namespace Faux
         m_GraphicsListPools[GetCurrentFrame()]->Reset();
     }
 
-    void Renderer::End()
+    void RenderContext::End()
     {
         m_Swapchain.Present();
     }
@@ -68,7 +68,7 @@ namespace Faux
     ////////////////////////////////////////////////////////////////////////////////////
     // Other
     ////////////////////////////////////////////////////////////////////////////////////
-    void Renderer::Resize(uint32_t width, uint32_t height)
+    void RenderContext::Resize(uint32_t width, uint32_t height)
     {
         m_Swapchain.Resize(width, height);
     }
@@ -76,7 +76,7 @@ namespace Faux
     ////////////////////////////////////////////////////////////////////////////////////
     // Private methods
     ////////////////////////////////////////////////////////////////////////////////////
-    void Renderer::DestroyQueue()
+    void RenderContext::DestroyQueue()
     {
         while (!m_DestroyQueue.empty())
         {
@@ -88,12 +88,12 @@ namespace Faux
     ////////////////////////////////////////////////////////////////////////////////////
     // Callbacks
     ////////////////////////////////////////////////////////////////////////////////////
-    void Renderer::DestroyCallback(Obsidian::DeviceDestroyFn fn)
+    void RenderContext::DestroyCallback(Obsidian::DeviceDestroyFn fn)
     {
         m_DestroyQueue.push(fn);
     }
 
-    void Renderer::MessageCallback(Obsidian::DeviceMessageType type, const std::string& message) const
+    void RenderContext::MessageCallback(Obsidian::DeviceMessageType type, const std::string& message) const
     {
         switch (type)
         {

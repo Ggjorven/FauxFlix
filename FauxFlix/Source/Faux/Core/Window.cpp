@@ -18,7 +18,7 @@ namespace Faux
             .SetFlags(Obsidian::WindowFlags::Default)
             .SetEventCallback([this](Obsidian::Event e) { OnEvent(e); })
         )
-        , m_Renderer(m_Window, specs.VSync)
+        , m_RenderContext(m_Window, specs.VSync)
     {
         FF_ASSERT(m_Specification.EventCallback, "Must have an event callback.");
     }
@@ -33,13 +33,13 @@ namespace Faux
     void Window::SwapBuffers()
     {
         m_Window.SwapBuffers();
-        //m_Renderer.End();
+        //m_RenderContext.End();
     }
 
     void Window::PollEvents()
     {
         m_Window.PollEvents();
-        //m_Renderer.Begin();
+        //m_RenderContext.Begin();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace Faux
         Nano::Events::EventHandler handler(e);
 
         handler.Handle<Obsidian::WindowCloseEvent>([&](const Obsidian::WindowCloseEvent& wce) { (void)wce; m_Window.Close();  });
-        handler.Handle<Obsidian::WindowResizeEvent>([&](const Obsidian::WindowResizeEvent& wre) { m_Renderer.Resize(wre.GetWidth(), wre.GetHeight()); });
+        handler.Handle<Obsidian::WindowResizeEvent>([&](const Obsidian::WindowResizeEvent& wre) { m_RenderContext.Resize(wre.GetWidth(), wre.GetHeight()); });
 
         m_Specification.EventCallback(e);
     }
