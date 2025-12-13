@@ -94,11 +94,19 @@ local Dependencies =
 ------------------------------------------------------------------------------
 -- External Dependency logic
 ------------------------------------------------------------------------------
+local function getIOResult(cmd)
+	local handle = io.popen(cmd) -- Open a console and execute the command.
+	local output = handle:read("*a") -- Read the output.
+	handle:close() -- Close the handle.
+
+	return output:match("^%s*(.-)%s*$") -- Trim any trailing whitespace (such as newlines)
+end
+
 -- FFmpeg
 -- BuildOptions
 -- TODO: Window and MacOS
 if os.target() == "linux" then
-    append_to_table(Dependencies.FFmpeg.BuildOptions, "`pkg-config --cflags libavcodec libavformat libavutil libswscale libswresample`")
+    append_to_table(Dependencies.FFmpeg.BuildOptions, getIOResult("pkg-config --cflags libavcodec libavformat libavutil libswscale libswresample"))
 else
     error("FFmpeg inclusion is currently not supported for this platform. Window and MacOS are in the making.")
 end
@@ -106,7 +114,7 @@ end
 -- LinkOptions
 -- TODO: Window and MacOS
 if os.target() == "linux" then
-    append_to_table(Dependencies.FFmpeg.LinkOptions, "`pkg-config --libs libavcodec libavformat libavutil libswscale libswresample`")
+    append_to_table(Dependencies.FFmpeg.LinkOptions, getIOResult("pkg-config --libs libavcodec libavformat libavutil libswscale libswresample"))
 else
     error("FFmpeg linking is currently not supported for this platform. Window and MacOS are in the making.")
 end
