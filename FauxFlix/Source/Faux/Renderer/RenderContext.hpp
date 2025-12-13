@@ -15,6 +15,8 @@
 namespace Faux
 {
 
+	class Renderer;
+
     ////////////////////////////////////////////////////////////////////////////////////
     // RenderContext
     ////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +59,8 @@ namespace Faux
         std::array<Nano::Memory::DeferredConstruct<Obsidian::CommandListPool>, Obsidian::Information::FramesInFlight> m_GraphicsListPools = { };
 
         std::queue<Obsidian::DeviceDestroyFn> m_DestroyQueue = {};
+
+		friend class Renderer;
     };
 
 }

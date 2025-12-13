@@ -15,7 +15,7 @@ namespace Faux
         , m_Window(Obsidian::WindowSpecification()
             .SetTitle(specs.Title)
             .SetWidthAndHeight(specs.Width, specs.Height)
-            .SetFlags(Obsidian::WindowFlags::Default)
+            .SetFlags(specs.Flags)
             .SetEventCallback([this](Obsidian::Event e) { OnEvent(e); })
         )
         , m_RenderContext(m_Window, specs.VSync)
