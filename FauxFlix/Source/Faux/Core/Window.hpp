@@ -60,7 +60,7 @@ namespace Faux
         // Getters
         inline const WindowSpecification& GetSpecification() const { return m_Specification; }
         inline Obsidian::Window& GetWindow() { return m_Window; }
-        inline RenderContext GetContext() { return m_RenderContext; }
+        inline RenderContext& GetContext() { return m_RenderContext; }
 
         inline bool IsOpen() const { return m_Window.IsOpen(); }
 
